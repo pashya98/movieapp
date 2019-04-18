@@ -8,9 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.prashant.movieapp.R
 import com.prashant.movieapp.data.model.HeaderSection
+import android.support.v7.widget.LinearSnapHelper
+import android.support.v7.widget.SnapHelper
 
 
-class SectionAdapter(var mContext: Context, var mSectionList: List<HeaderSection>) :
+
+
+class SectionAdapter(var mContext: Context,var mCallBack:SectionListDataAdapter.OnClickShow,
+                     var mSectionList: List<HeaderSection>) :
     RecyclerView.Adapter<SectionAdapter.ItemRowHolder>() {
 
     fun updateSection(timeDetailsList:List<HeaderSection>){
@@ -29,7 +34,7 @@ class SectionAdapter(var mContext: Context, var mSectionList: List<HeaderSection
         val singleSectionItems = mSectionList[i].allSectionItem
 
         itemRowHolder.itemTitle.setText(sectionName)
-        val itemListDataAdapter = SectionListDataAdapter(mContext, singleSectionItems)
+        val itemListDataAdapter = SectionListDataAdapter(mContext, mCallBack, singleSectionItems)
         itemRowHolder.recycler_view_list.adapter = itemListDataAdapter
 
     }
@@ -44,8 +49,10 @@ class SectionAdapter(var mContext: Context, var mSectionList: List<HeaderSection
         var recycler_view_list: RecyclerView
 
         init {
-            this.itemTitle = view.findViewById(R.id.itemTitle)
-            this.recycler_view_list = view.findViewById(R.id.recycler_view_list)
+            itemTitle = view.findViewById(R.id.itemTitle)
+            recycler_view_list = view.findViewById(R.id.recycler_view_list)
+//            val snapHelper = LinearSnapHelper()
+//            snapHelper.attachToRecyclerView(recycler_view_list)
         }
     }
 

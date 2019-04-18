@@ -1,6 +1,8 @@
 package com.prashant.movieapp.network
 
-import com.prashant.movieapp.data.model.CommonResponse
+import com.prashant.movieapp.data.model.MovieDetail
+import com.prashant.movieapp.data.model.MovieResponse
+import com.prashant.movieapp.data.model.TVShowResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -9,23 +11,53 @@ import retrofit2.http.Query
  * Created by Prashant Mhetre on 17/4/19.
  */
 interface ApiInterface {
-    @GET("top_rated")
+    @GET("movie/top_rated")
     fun getTopRatedMovies(@Query("api_key") apiKey: String,
                           @Query("language") language:String,
-                          @Query("page") page:Int): Single<CommonResponse>
+                          @Query("page") page:Int): Single<MovieResponse>
 
-    @GET("popular")
+    @GET("movie/popular")
     fun getPoularMovies(@Query("api_key") apiKey: String,
                         @Query("language") language:String,
-                        @Query("page") page:Int): Single<CommonResponse>
+                        @Query("page") page:Int): Single<MovieResponse>
 
-    @GET("now_playing")
+    @GET("movie/now_playing")
     fun getNowPlayingMovies(@Query("api_key") apiKey: String,
                        @Query("language") language:String,
-                       @Query("page") page:Int): Single<CommonResponse>
+                       @Query("page") page:Int): Single<MovieResponse>
 
-    @GET("upcoming")
-    fun getUpcomming(@Query("api_key") apiKey: String,
+    @GET("movie/upcoming")
+    fun getUpcommingMovies(@Query("api_key") apiKey: String,
                      @Query("language") language:String,
-                     @Query("page") page:Int): Single<CommonResponse>
+                     @Query("page") page:Int): Single<MovieResponse>
+
+    @GET("tv/top_rated")
+    fun getTopRatedTVShows(@Query("api_key") apiKey: String,
+                          @Query("language") language:String,
+                          @Query("page") page:Int): Single<TVShowResponse>
+
+    @GET("tv/popular")
+    fun getPoularTVShows(@Query("api_key") apiKey: String,
+                        @Query("language") language:String,
+                        @Query("page") page:Int): Single<TVShowResponse>
+
+    @GET("tv/latest")
+    fun getLatestTVShows(@Query("api_key") apiKey: String,
+                            @Query("language") language:String,
+                            @Query("page") page:Int): Single<TVShowResponse>
+
+    @GET("tv/airing_today")
+    fun getAiringTodayTVShows(@Query("api_key") apiKey: String,
+                     @Query("language") language:String,
+                     @Query("page") page:Int): Single<TVShowResponse>
+
+    @GET("movie/{id}")
+    fun getTVShowsDetails(@Query("api_key") apiKey: String,
+                              @Query("language") language:String,
+                              @Query("page") page:Int): Single<MovieDetail>
+
+    @GET("tv/airing_today")
+    fun getMovieDetails(@Query("api_key") apiKey: String,
+                              @Query("language") language:String,
+                              @Query("page") page:Int): Single<MovieDetail>
 }

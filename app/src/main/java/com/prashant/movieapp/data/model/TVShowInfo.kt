@@ -6,7 +6,7 @@ package com.prashant.movieapp.data.model
 class TVShowInfo (  var vote_count: Int,
                   //  var id: Int,
                     var video: Boolean,
-                    var vote_average: Double,
+                    var vote_average: Float,
                   //  var name: String,
                     var popularity:Double,
                    // var poster_path:String,

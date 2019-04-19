@@ -4,28 +4,23 @@ package com.prashant.movieapp.ui.list
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.Toast
 
 import com.prashant.movieapp.R
+import com.prashant.movieapp.data.model.BaseItem
 import com.prashant.movieapp.data.model.HeaderSection
-import com.prashant.recycleassignment.home.SectionAdapter
-import com.prashant.recycleassignment.home.SectionListDataAdapter
+import kotlinx.android.synthetic.main.fragment_movie_list.*
 
-class MovieListFragment : Fragment(),MovieListNavigator, SectionListDataAdapter.OnClickShow {
+class MovieListFragment : Fragment(), MovieListNavigator, SectionListDataAdapter.OnClickShow {
 
     private lateinit var mHomeViewModel: MovieListViewModel
     private lateinit var mSectionalAdapter: SectionAdapter
-    private lateinit var mSectionalRecycleView:RecyclerView
-    private lateinit var mProgressBar:ProgressBar
-    private var mFragmentInetraction: OnFragmentInteractionListener?=null
+    private var mFragmentInetraction: OnFragmentInteractionListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,20 +31,19 @@ class MovieListFragment : Fragment(),MovieListNavigator, SectionListDataAdapter.
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mSectionalRecycleView=view.findViewById(R.id.rv_sectional)
-        mProgressBar=view.findViewById(R.id.progress_bar)
-        mSectionalAdapter = SectionAdapter(activity as Context,this, ArrayList<HeaderSection>())
-        mSectionalRecycleView.adapter = mSectionalAdapter
+
+        mSectionalAdapter = SectionAdapter(activity as Context, this, ArrayList<HeaderSection>())
+        rv_sectional.adapter = mSectionalAdapter
         activity?.let {
             mHomeViewModel = ViewModelProviders.of(it).get(MovieListViewModel::class.java)
         }
         getMovies()
     }
 
-    fun getMovies(){
+    fun getMovies() {
         mHomeViewModel.getMoviesList(this).observe(this, object : Observer<List<HeaderSection>> {
             override fun onChanged(sectionList: List<HeaderSection>?) {
-                if(sectionList!=null){
+                if (sectionList != null) {
                     mSectionalAdapter.updateSection(sectionList)
                 }
             }
@@ -57,19 +51,19 @@ class MovieListFragment : Fragment(),MovieListNavigator, SectionListDataAdapter.
     }
 
     override fun showMessage(message: String) {
-        Toast.makeText(activity,message,Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 
     override fun showLoading() {
-       // mProgressBar.visibility=View.VISIBLE
+         progress_bar.visibility=View.VISIBLE
     }
 
     override fun hideLoading() {
-      //  mProgressBar.visibility=View.GONE
+        progress_bar.visibility=View.GONE
     }
 
-    override fun onClickShow(id: Int, type: Int) {
-        mFragmentInetraction?.onFragmentInteraction(id,type)
+    override fun onClickShow(item: BaseItem) {
+        mFragmentInetraction?.onFragmentInteraction(item)
     }
 
     override fun onAttach(context: Context) {
@@ -88,7 +82,7 @@ class MovieListFragment : Fragment(),MovieListNavigator, SectionListDataAdapter.
 
 
     interface OnFragmentInteractionListener {
-        fun onFragmentInteraction(id:Int,type:Int)
+        fun onFragmentInteraction(item: BaseItem)
     }
 
 }

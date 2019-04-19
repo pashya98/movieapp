@@ -5,6 +5,7 @@ import com.prashant.movieapp.data.model.MovieResponse
 import com.prashant.movieapp.data.model.TVShowResponse
 import io.reactivex.Single
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -51,13 +52,15 @@ interface ApiInterface {
                      @Query("language") language:String,
                      @Query("page") page:Int): Single<TVShowResponse>
 
-    @GET("movie/{id}")
-    fun getTVShowsDetails(@Query("api_key") apiKey: String,
-                              @Query("language") language:String,
-                              @Query("page") page:Int): Single<MovieDetail>
+    @GET("tv/{id}")
+    fun getTVShowsDetails(
+        @Path("id") id:Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") language:String): Single<MovieDetail>
 
-    @GET("tv/airing_today")
-    fun getMovieDetails(@Query("api_key") apiKey: String,
-                              @Query("language") language:String,
-                              @Query("page") page:Int): Single<MovieDetail>
+    @GET("movie/{movie_id}")
+    fun getMovieDetails(
+                     @Path("movie_id") id:Int,
+                     @Query("api_key") apiKey: String,
+                     @Query("language") language:String): Single<MovieDetail>
 }

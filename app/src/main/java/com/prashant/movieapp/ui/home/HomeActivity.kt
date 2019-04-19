@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import com.prashant.movieapp.R
+import com.prashant.movieapp.data.model.BaseItem
 import com.prashant.movieapp.ui.details.DetailFragment
 import com.prashant.movieapp.ui.list.MovieListFragment
 
@@ -16,22 +17,30 @@ class HomeActivity : AppCompatActivity(), MovieListFragment.OnFragmentInteractio
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar)
-
+        supportActionBar?.title=getString(R.string.title_activity_home)
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, MovieListFragment(),"list")
+            .add(R.id.fragment_container, MovieListFragment())
             .commit()
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
     }
 
-    override fun onFragmentInteraction(id: Int,type:Int) {
+    override fun onFragmentInteraction(item: BaseItem) {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        supportActionBar?.title=getString(R.string.show_details)
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, DetailFragment.newInstance(id,type),"details")
+            .add(R.id.fragment_container, DetailFragment.newInstance(item))
             .addToBackStack(null)
             .commit()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.title=getString(R.string.title_activity_home)
     }
 
 }

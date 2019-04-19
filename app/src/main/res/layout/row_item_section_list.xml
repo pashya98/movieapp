@@ -13,7 +13,7 @@
             android:padding="2dp">
 
         <TextView
-                android:id="@+id/itemTitle"
+                android:id="@+id/tv_section_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"

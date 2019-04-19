@@ -7,7 +7,7 @@ data class MovieInfo(
     var vote_count: Int,
  //   var id: Int,
     var video: Boolean,
-    var vote_average: Double,
+    var vote_average: Float,
 //    var title: String,
     var popularity:Double,
 //    var poster_path:String,
